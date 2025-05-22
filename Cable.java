@@ -1,47 +1,43 @@
 public class Cable extends Component {
-    private int length;
+    private double length;
     private double signalLossXKm;
     private String msg;
     private double threshold;
-    private boolean sent;
 
-    public Cable(String name, int length, double signalLossXKm){
+
+    public Cable(String name, double length, double signalLossXKm){
         super(name);
         this.length=length;
         this.signalLossXKm=signalLossXKm;
         setSignalStrength(calculateSignalStrength());
         this.msg="";
         this.threshold=0;
-        this.sent=false;
     }
 
-    public Cable(String name, int length, double signalLossXKm, double threshold){
+    public Cable(String name, double length, double signalLossXKm, double threshold){
         super(name);
         this.length=length;
         this.signalLossXKm=signalLossXKm;
         setSignalStrength(calculateSignalStrength());
         this.msg="";
         this.threshold=threshold;
-        this.sent=false;
     }    
     
 
     public void transmit(String signal) {
         if (canTransmit()) {
             msg=signal;
-            sent=true;
             setSignal(signal);
             processSignal(signal);
         } 
-        else { sent=false;}
     }
 
     public boolean canTransmit(){
-        return getSignalStrength()>threshold;
+        return getSignalStrength()>threshold/100;
     }
 
     private double calculateSignalStrength() {
-        return Math.max(0, 1-((length*signalLossXKm)/100));
+        return Math.max(0, Math.floor(1 - ((length*signalLossXKm)/100))); 
     }
 
     @Override
@@ -59,8 +55,6 @@ public class Cable extends Component {
                "\nMensaje: "+msg;
     }
     
-    public void setSentTrue() {sent=true;}
-    public void setSentFalse() {sent=false;}
-    public boolean getSent(){ return sent;}
-    
+    public double getLength(){ return length;}
+    public double getSignalLossXKm(){ return signalLossXKm;}
 }

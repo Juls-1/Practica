@@ -21,7 +21,7 @@ public class Receiver extends Component {
     
     @Override 
     public void processSignal(String signal){
-        System.out.println("Señal llego a receiver: "+ signal);
+        System.out.println("Señal llego a receiver: "+ signal+" -Intensidad: "+(getSignalStrength()*100)+"%");
     }
 
     public String getMsg(){ return this.msg;}
