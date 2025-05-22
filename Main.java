@@ -33,6 +33,35 @@ public class Main {
         System.out.println("\n----------------------------------");
         sistema2.run(signal2);        
         System.out.println("R1 recibio: "+r1.displayMessage());
+
+
+        System.out.println("\n========== SISTEMA CON REPEATER ==========");
+        Transmitter t2= new Transmitter("T2", true);
+        Cable c4= new Cable("C4", 15, 4, 10);
+        Repeater rep1= new Repeater("REP1", 3, true);  
+        Cable c5= new Cable("C5", 10, 5, 10);
+        Receiver r2= new Receiver("R2");
+
+        Component[] componentes3 = {t2, c4, rep1, c5, r2};
+        TelegraphSystem sistema3 = new TelegraphSystem(componentes3);
+
+        System.out.println("\n--- Caso 1: Señal con repeater con bateria ---");
+        sistema3.run("PRUEBA");
+        System.out.println("R2 recibio: " + r2.displayMessage());
+        System.out.println(rep1);
+
+        System.out.println("\n--- Caso 2: Agotar bateria del repeater ---");
+        for (int i = 2; i <= 4; i++) {
+            sistema3.run("PRUEBAA");
+            System.out.println("R2 recibio: " + r2.displayMessage());
+            System.out.println(rep1);
+        }
+
+        System.out.println("\n--- Caso 3: Recargar repeater ---");
+        rep1.recharge();
+        sistema3.run("PRUEBAAA");
+        System.out.println("R2 recibio: " + r2.displayMessage());
+        System.out.println(rep1);
     }
 }
     

@@ -61,7 +61,7 @@ public class Cable extends Component {
 
     @Override
     public void processSignal(String signal) {
-        System.out.println("Señal salio de cable: "+signal+" -Intensidad: "+(getSignalStrength()*100)+"%");
+        System.out.println("Señal salio de cable "+getName()+": "+signal+" -Intensidad: "+(getSignalStrength()*100)+"%");
     }
 
     public double calculateFailChance(){

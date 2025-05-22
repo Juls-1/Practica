@@ -28,7 +28,7 @@ public class Transmitter extends Component{
     public boolean canSendSignal(){return isOn; }
     @Override
     public void processSignal(String signal){
-        System.out.println("Señal salio de transmitter: "+ signal);
+        System.out.println("Señal salio de transmitter "+getName()+": "+ signal);
     }
 
     public void setOn(){ isOn=true;}
@@ -39,7 +39,8 @@ public class Transmitter extends Component{
     @Override
     public String toString(){
         String estado;
-        if(isOn){estado="Encendido";} else{estado="Apagado";}
+        if(isOn){estado="Encendido";} 
+        else{estado="Apagado";}
         return super.toString()+
                "\nTipo: Transmitter"+
                "\nEstado: "+ estado+
