@@ -9,12 +9,14 @@ public class TelegraphSystem {
         if (!isValidConfiguration()){
             System.out.println("Configuracion no soportada");
         }
-        if (!((Transmitter) components[0]).canSendSignal()){
-            System.out.println("El emisor no puede enviar la señal");
+        if(((Transmitter) components[0]).canSendSignal()) {
+            startTransmision(signal);
+            processComponents();
+            deliverToReceiver();
         }
-        startTransmision(signal);
-        processComponents();
-        deliverToReceiver();
+        else {
+            System.out.println("El emisor no puede enviar la señal");
+        }    
     }
 
     private boolean isValidConfiguration(){
@@ -35,7 +37,12 @@ public class TelegraphSystem {
                 prev = prevWhenRealyOff(prev, i);
                 processCable((Cable) curr, prev);
                 if (!((Cable) curr).canTransmit()){
+                    if(((Cable) curr).hasFailed()){
+                        System.out.println("El cable ha fallado y no puede transmitir la señal");
+                    }
+                    else{
                     System.out.println("La señal es demasiado debil para ser transmitida por el cable");
+                    }
                     cleanReceiver();
                 }
             } else if (curr instanceof Relay) {
