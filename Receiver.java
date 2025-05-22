@@ -1,22 +1,28 @@
 public class Receiver extends Component {
-    private String msg;
     private Translator translator;
-    
+        private String msg;
+
     public Receiver(String name) {
         super(name);
-        msg = "";
+        translator = new Translator();
+        msg="";
     }
 
     public void receiveSignal(String signal) {
         translator.translateFromMorse(signal);
-        msg = translator.getMsg();
+        setSignal(translator.getMsg());
+        msg=translator.getMsg();
+        processSignal(getSignal());
     }
 
-    public void displayMessage() {
-        System.out.println("Mensaje recibido: " + msg);
+    public String displayMessage() {
+        return getMsg();
     }
     
     @Override 
     public void processSignal(String signal){
+        System.out.println("Señal llego a receiver: "+ signal);
     }
+
+    public String getMsg(){ return this.msg;}
 }

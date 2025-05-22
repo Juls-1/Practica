@@ -7,24 +7,28 @@ public class Transmitter extends Component{
         super(name);
         isOn = false;
         msg="";
+        translator= new Translator();
     }
     public Transmitter(String name, boolean isOn){
         super(name);
         this.isOn = isOn;
+        translator = new Translator();
     }
 
     public void sendSignal(String signal){
-        if (isOn) {
+        if (canSendSignal()) {
             msg=signal;
             translator.translateToMorse(signal);
-            processSignal(translator.getMsg());
-        } 
-        else { System.out.println("emisor apagado");}
+            setSignal(translator.getMsg());
+            processSignal(signal);
+        }
+        else{  System.out.println("emisor apagado."); } 
     }
 
+    public boolean canSendSignal(){return isOn; }
     @Override
-    public void processSignal(String morseMsg){
-        System.out.println("Enviando senyal:"+ morseMsg);
+    public void processSignal(String signal){
+        System.out.println("Señal salio de transmitter: "+ signal);
     }
 
     public void setOn(){ isOn=true;}

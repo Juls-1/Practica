@@ -27,23 +27,26 @@ public class Cable extends Component {
     
 
     public void transmit(String signal) {
-        if (getSignalStrength()>threshold) {
+        if (canTransmit()) {
             msg=signal;
             sent=true;
+            setSignal(signal);
             processSignal(signal);
         } 
-        else {
-            sent=false;
-            System.out.println("La senyal es muy debil");}
+        else { sent=false;}
+    }
+
+    public boolean canTransmit(){
+        return getSignalStrength()>threshold;
     }
 
     private double calculateSignalStrength() {
-        return Math.max(0, 1-(length*signalLossXKm));
+        return Math.max(0, 1-((length*signalLossXKm)/100));
     }
 
     @Override
     public void processSignal(String signal) {
-        System.out.println("Enviando senyal: "+signal);
+        System.out.println("Señal salio de cable: "+signal+" -Intensidad: "+(getSignalStrength()*100)+"%");
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Cable extends Component {
                "\nTipo: Cable"+
                "\nLongitud de Cable: "+length+
                "\nPerdida de Senyal por Km: "+signalLossXKm+
-               "\nFuerza de Senyal: "+getSignalStrength()+
+               "\nFuerza de Senyal: "+(getSignalStrength()*100)+"%"+
                "\nMensaje: "+msg;
     }
     
